@@ -2,6 +2,8 @@
 
 import socket
 import IO
+from NetHandler import NetHandler
+
 
 class TcpClient(NetHandler):
     def __init__(self):
