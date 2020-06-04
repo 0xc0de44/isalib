@@ -1,6 +1,14 @@
 #!/usr/bin/python3
 
-import requests
+import os
+import base64
+
+try:
+    import requests
+except:
+    os.system("pip3 install requests")
+    import requests
+
 import IO
 from NetHandler import NetHandler
 
@@ -8,8 +16,9 @@ class HttpsClient(NetHandler):
     def __init__(self):
         NetHandler.__init__(self)
 
-    def init(self, ip="https://www.google.com/", port="")
-        NetHandler.init(self, ip, port)
+    def init(self, ip="https://www.google.com/"):
+        self.ip=ip
+        self.state="INIT"
 
     def start(self):
         if self.state != "INIT":
@@ -29,23 +38,32 @@ class HttpsClient(NetHandler):
         return True
 
     def send(self, data):
-        if salf.state != "START":
+        if self.state != "START":
             IO.print_error("HttpsClient : cannot send data, use start() before")
             return False
         if type(data) is not bytes:
             data=data.encode("utf-8")
-        data=base64.b64encode(data)
-        postdata={"data" : f"{data}" }
-        r = requests.post(self.ip, postdata)
+        data=IO.urlencode(base64.b64encode(data))
+        IO.print_info(f"url is : {self.ip}?data={data}")
+        r = requests.get(f"{self.ip}?data={data}")
 
         if r.status_code != 200:
             return False
-        return True
+        return r.text
 
     def recv(self):
         if self.state != "START":
             return False
-        r=requests.get(ip)
+        r=requests.get(self.ip)
         if r.status_code != 200:
             return False
         return r.text
+
+if __name__ == "__main__":
+    url="http://51.15.174.68/tools/isalib.php"
+    cli=HttpsClient()
+    cli.init(url)
+    cli.start()
+    print(cli.recv())
+    print(cli.send("some data to send"))
+
