@@ -3,9 +3,9 @@
 from IO import *
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-class IHttpRequestHandler(BaseHTTPRequestHandler):
+class IHttpRequestHandler(BaseHTTPRequestHandler, NetHandler):
     def do_GET(self):
-        code,content=parseGetrequest()
+        code,content=parseGetRequest()
 
         self.send_response(code)
         self.end_headers()
@@ -21,5 +21,8 @@ class IHttpRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(content)
 
 if __name__ == "__main__":
-    httpd = HTTPServer(('localhost', 1337), IHttpRequestHandler)
+    ip='localhost'
+    port=80
+    httpd = HTTPServer((ip, port), IHttpRequestHandler)
     httpd.serve_forever()
+    print(f"Https server started on {ip}:{port}")
