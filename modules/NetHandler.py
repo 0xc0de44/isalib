@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import os, sys
-
+from IO import *
 
 class NetHandler:
     def __init__(self):

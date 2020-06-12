@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import socket
-import IO
+from IO import *
 from NetHandler import NetHandler
 
 
@@ -14,17 +14,17 @@ class TcpClient(NetHandler):
 
     def start(self):
         if self.state != "INIT":
-            IO.print_error("TcpClient : trying to start a connection without initialization")
+            IO().print_error("TcpClient : trying to start a connection without initialization")
             return False
         if self.state == "START":
-            IO.print_warning("TcpClient : already started, skipping")
+            IO().print_warning("TcpClient : already started, skipping")
             return True
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.sock.connect((self.ip, self.port))
         except:
-            IO.print_error(f"Couldn't connect to {self.ip}:{self.port} ")
+            IO().print_error(f"Couldn't connect to {self.ip}:{self.port} ")
             return False
 
         self.state = "START"
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     cli = TcpClient()
     cli.init(ip, port)
     if not cli.start():
-        IO.print_error("Cannot start Tcp Client")
+        IO().print_error("Cannot start Tcp Client")
         quit()
     cli.send("test")
     resp = cli.recv().decode("utf-8")

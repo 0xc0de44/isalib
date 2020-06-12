@@ -10,6 +10,7 @@ import ssl
 
 import threading, hashlib
 
+
 class SslServer(TcpServer):
     def __init__(self):
         TcpServer.__init__(self)
@@ -73,6 +74,7 @@ class SslServer(TcpServer):
         if self.state != "START":
             return False
         return self.ssock.recv(self.bufsize)
+
 
 if __name__ == "__main__":
     port = 443

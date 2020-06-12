@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-import random,IO
+import random
+from IO import *
 import threading
 
 class RemoteClient(threading.Thread):
@@ -11,7 +12,7 @@ class RemoteClient(threading.Thread):
         self.ip = ip
         rand=random.randint(10000000,99999999)
         random.seed(rand)
-        self.id = f"{self.addr}.{rand}"
+        self.id = f"{self.ip}.{rand}"
 
     def id(self):
         return self.id

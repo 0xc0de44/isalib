@@ -12,13 +12,14 @@ except:
 
 from NetHandler import NetHandler
 
+
 class HttpsClient(NetHandler):
     def __init__(self):
         NetHandler.__init__(self)
 
     def init(self, ip="https://www.google.com/"):
-        self.ip=ip
-        self.state="INIT"
+        self.ip = ip
+        self.state = "INIT"
 
     def start(self):
         if self.state != "INIT":
@@ -42,8 +43,8 @@ class HttpsClient(NetHandler):
             IO().print_error("HttpsClient : cannot send data, use start() before")
             return False
         if type(data) is not bytes:
-            data=data.encode("utf-8")
-        data=IO().urlencode(base64.b64encode(data))
+            data = data.encode("utf-8")
+        data = IO().urlencode(base64.b64encode(data))
         IO().print_info(f"url is : {self.ip}?data={data}")
         r = requests.get(f"{self.ip}?data={data}")
 
@@ -54,16 +55,16 @@ class HttpsClient(NetHandler):
     def recv(self):
         if self.state != "START":
             return False
-        r=requests.get(self.ip)
+        r = requests.get(self.ip)
         if r.status_code != 200:
             return False
         return r.text
 
+
 if __name__ == "__main__":
-    url="http://localhost/test"
-    cli=HttpsClient()
+    url = "http://localhost/test"
+    cli = HttpsClient()
     cli.init(url)
     cli.start()
     print(cli.recv())
     print(cli.send("some data to send"))
-

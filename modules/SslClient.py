@@ -63,6 +63,8 @@ if __name__ == "__main__":
     if not cli.start():
         IO().print_error("Cannot start Ssl Client")
         quit()
+    IO().print_info(f"Ssl Client connected to {ip}:{port}")
+    IO().print_info(f"Sending 'test'")
     cli.send("test")
     resp = cli.recv().decode("utf-8")
     print("Received " + resp)
