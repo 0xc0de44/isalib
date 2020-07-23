@@ -1,5 +1,5 @@
 # **[Dev in progress] isalib**
- My personnal hacking library, which will cover malware creation and automation. 
+ My personal hacking library, which will cover malware creation and automation. 
  Must be convertible into Win32 binaries.
  
  Showed here as a demo. 
